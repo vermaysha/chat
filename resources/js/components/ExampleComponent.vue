@@ -71,7 +71,7 @@
                     </div>
                 </div>
             </div>
-            <p class="text-center top_spac">Design by <a target="_blank" href="https://bootsnipp.com/sunil8107">Sunil Rajput</a>, Created By <a href="https://facebook.com/vermaysha">Ashary Vermaysha</a></p>
+            <p class="text-center top_spac">Design by <a target="_blank" href="https://bootsnipp.com/sunil8107">Sunil Rajput</a>, Created By <a href="https://facebook.com/vermaysha">Ashary Vermaysha</a>, Source Code <a href="https://github.com/vermaysha/chat">Github</a> </p>
         </div>
         <!-- Modal -->
         <div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" data-focus="true">
@@ -108,8 +108,10 @@
         },
         methods: {
             ok() {
-                localStorage.setItem('name', this.name)
-                $('#myModal').modal('hide')
+                if (this.name.length > 0) {
+                    localStorage.setItem('name', this.name)
+                    $('#myModal').modal('hide')
+                }
             },
             getChannel() {
                 return this.channel

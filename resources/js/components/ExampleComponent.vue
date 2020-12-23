@@ -146,7 +146,7 @@
             },
             init() {
                 if (this.ws == null) {
-                    this.ws = new WebSocket('ws://localhost:8090')
+                    this.ws = new WebSocket(WEBSOCKET_URL)
                 }
                 this.ws.onopen = e => {
                     console.log('[open] Connection established')

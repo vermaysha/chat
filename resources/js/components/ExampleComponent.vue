@@ -41,7 +41,7 @@
                                 <div class="outgoing_msg" v-if="chat.username == getName()">
                                     <div class="sent_msg">
                                         <p>{{ chat.message }}</p>
-                                        <span class="time_date"> 11:01 AM    |    Today</span>
+                                        <span class="time_date">{{ moment(chat.created_at).calendar() }}</span>
                                     </div>
                                 </div>
                                 <div class="incoming_msg" v-else>
@@ -54,7 +54,7 @@
                                                 <strong class="mb-1 d-block">{{ chat.username }}</strong>
                                                 {{ chat.message }}
                                             </p>
-                                            <span class="time_date"> 11:01 AM    |    Today</span>
+                                            <span class="time_date">{{ moment(chat.created_at).calendar() }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -121,14 +121,15 @@
                     this.channel = null
                 } else {
                     this.channel = channel
+                    this.getMessage();
                     this.init()
                 }
             },
             getMessage() {
-                // this.$http.get('/api/chat-history')
-                //     .then(function(res) {
-                //         this.message = res.data
-                //     }.bind(this))
+                this.$http.get('/api/chat-history')
+                .then(function(res) {
+                    this.message = res.data
+                }.bind(this))
             },
             getName() {
                 return this.name

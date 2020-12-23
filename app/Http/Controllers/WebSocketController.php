@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Message;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
 
@@ -25,10 +26,23 @@ class WebSocketController extends Controller implements MessageComponentInterfac
         echo sprintf('Connection %d sending message "%s" to %d other connection%s' . "\n"
             , $from->resourceId, $msg, $numRecv, $numRecv == 1 ? '' : 's');
 
+        $data = json_decode($msg);
+        $date = now();
+        $message = new Message;
+        $message->username = $data->username;
+        $message->message = $data->message;
+        $message->created_at = $date;
+        $message->updated_at = $date;
+        $message->save();
         foreach ($this->clients as $client) {
             if ($from !== $client) {
                 // The sender is not the receiver, send to each client connected
-                $client->send($msg);
+                $client->send(json_encode([
+                    'username' => $data->username,
+                    'message' => $data->message,
+                    'created_at' => $date,
+                    'updated_at' => $date
+                ]));
             }
         }
     }

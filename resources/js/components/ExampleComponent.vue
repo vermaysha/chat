@@ -126,7 +126,7 @@
                 }
             },
             getMessage() {
-                this.$http.get('/api/chat-history')
+                this.$http.get(CHAT_HISTORY_URL)
                 .then(function(res) {
                     this.message = res.data
                 }.bind(this))
